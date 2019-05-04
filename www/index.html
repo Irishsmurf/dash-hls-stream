@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+    <style>
+      body, html {
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        background-color: #22233A;
+      }
+      div {
+        box-sizing: border-box;
+      }
+      a {
+        text-decoration: none;
+        color: #D56C2C;
+      }
+      a:hover {
+        cursor: pointer;
+        color: red;
+        transition: color 0.3s ease-in-out;
+        color: #22233A;
+      }
+      .header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5em;
+        background-color: white;
+        border-bottom: 1px solid #D56C2C;
+      }
+      .header p {
+        display: inline-block;
+        margin: 0 0.5em;
+      }
+      .header .content {
+        width: 1280px;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
+        height: 100%;
+        padding: 0 1em;
+      }
+      .header h1 {
+        position: relative;
+        transform: translateY(50%);
+      }
+      .header .links {
+        position: absolute;
+        right: 0;
+        transform: translateY(-50%);
+        padding-right: 1em;
+      }
+      .video-wrapper {
+        margin: 5em auto 0 auto;
+        padding: 2em 1em 0 1em;
+        width: 1280px;
+        max-width: 100%;
+      }
+      h1 {
+        margin: 0;
+        color: #22233A;
+      }
+      video {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="content">
+        <h1>__PROJECT__</h1>
+        <div class="links">
+          <a href="/">Dash</a>
+          <p>|</p>
+          <a href="/">HLS</a>
+        </div>
+      </div>
+    </div>
+    <div class="video-wrapper">
+      <video controls="true"></video>
+    </div>
+    <script>
+      function init() {
+        var video, url = "http://__HOST__:8080/dash/live.mpd";
+
+        video = document.querySelector("video");
+        player = dashjs.MediaPlayer().create();
+        player.initialize(video, url, true);
+        player.setLowLatencyEnabled(true);
+        player.setLiveDelay(__LIVE_DELAY__);
+        player.setLowLatencyMinDrift(__LATENCY_MIN_DRIFT__);
+        player.setCatchUpPlaybackRate(__CATCHUP_PLAYBACK_RATE__);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var player = init();
+      });
+    </script>
+  </body>
+</html>

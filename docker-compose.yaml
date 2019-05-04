@@ -1,0 +1,13 @@
+version: '2.2' # Supports init argument
+
+services:
+  dash:
+    image: sjsmart/dash:latest
+    ports:
+      - '8080:8080'
+      - '1935:1935'
+    environment:
+      DASH_STREAM_HOST: 'localhost'
+      DASH_STREAM_KEY: 'dashuserpro'
+      DASH_PROJECT_NAME: 'Live Stream'
+      
