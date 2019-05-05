@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Test</title>
+    <title>__PROJECT__</title>
     <style>
       body, html {
         height: 100%;
@@ -77,9 +77,9 @@
       <div class="content">
         <h1>__PROJECT__</h1>
         <div class="links">
-          <a href="/">Dash</a>
+          <a href="/play/dash">Dash</a>
           <p>|</p>
-          <a href="/">HLS</a>
+          <a href="/play/hls">HLS</a>
         </div>
       </div>
     </div>
@@ -87,20 +87,31 @@
       <video controls="true"></video>
     </div>
     <script>
-      function init() {
-        var video, url = "http://__HOST__:8080/dash/live.mpd";
-
-        video = document.querySelector("video");
+      function initDash(video) {
         player = dashjs.MediaPlayer().create();
-        player.initialize(video, url, true);
+        player.initialize(video, "/dash/live.mpd", true);
         player.setLowLatencyEnabled(true);
         player.setLiveDelay(__LIVE_DELAY__);
         player.setLowLatencyMinDrift(__LATENCY_MIN_DRIFT__);
         player.setCatchUpPlaybackRate(__CATCHUP_PLAYBACK_RATE__);
       }
 
+      function initHLS(video) {
+        video.setAttribute('src', '/hls/live.m3u8');
+      }
+
       document.addEventListener("DOMContentLoaded", function () {
-        var player = init();
+        if(window.location.pathname != "/play/hls" && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+          window.location.replace("/play/hls");
+        }
+
+        var video = document.querySelector("video");
+
+        if(window.location.pathname == "/play/hls") {
+          initHLS(video);
+        } else {
+          initDash(video);
+        }
       });
     </script>
   </body>
