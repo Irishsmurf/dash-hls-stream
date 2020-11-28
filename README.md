@@ -12,7 +12,7 @@ This project is a downstream of [alfg/nginx-rtmp](https://github.com/alfg/docker
 
 ### Docker
 ```
-docker run -it -p 1935:1935 -p 8080:80 sjsmart/dash-hls-stream
+docker run -it -p 1935:1935 -p 80:8080 sjsmart/dash-hls-stream
 ```
 
 ### Docker Compose
